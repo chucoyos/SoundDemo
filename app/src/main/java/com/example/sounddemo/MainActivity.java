@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Trace;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +27,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         playButton = findViewById(R.id.PlayButton);
         stopButton = findViewById(R.id.StopButton);
-        mediaPlayer = MediaPlayer.create(this, R.raw.melody);
+        mediaPlayer = MediaPlayer.create(this, R.raw.nunca);
         volumeSeekBar = findViewById(R.id.volumeSeekBar);
         scrubSeekBar = findViewById(R.id.scrubSeekBar);
 
@@ -68,12 +71,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                mediaPlayer.pause();
+                //mediaPlayer.pause();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mediaPlayer.start();
+                //mediaPlayer.start();
             }
         });
 
@@ -82,20 +85,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startTimer(){
-                new Timer().scheduleAtFixedRate(new TimerTask() {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
                         scrubSeekBar.setProgress(mediaPlayer.getCurrentPosition());
                     }
-                }, 0, 300);
+                }, 0, 1000);
     }
+
+
 
     public void playSound(View view){
         mediaPlayer.setLooping(true);
-                mediaPlayer.start();
+        mediaPlayer.start();
+        //startTimer();
     }
 
     public void stopSound(View view){
         mediaPlayer.pause();
     }
+
 }
