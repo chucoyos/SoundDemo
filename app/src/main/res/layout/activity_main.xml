@@ -7,50 +7,18 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:layout_margin="12dp"
-            android:id="@+id/PlayButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="playSound"
-            android:text="Play" />
-
-        <Button
-            android:layout_margin="12dp"
-            android:id="@+id/StopButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="stopSound"
-            android:text="Stop" />
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="300dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <SeekBar
             android:id="@+id/volumeSeekBar"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="20dp"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="12dp"
@@ -64,11 +32,59 @@
 
         <SeekBar
             android:id="@+id/scrubSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_marginEnd="24dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <ImageView
+            android:id="@+id/repeat2ImageView"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="64dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/repeat" />
+
+        <ImageView
+            android:id="@+id/backImageView"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="48dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/back" />
+
+        <ImageView
+            android:id="@+id/playImageView"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:onClick="playSound"
+            app:srcCompat="@drawable/play_blue" />
+
+        <ImageView
+            android:id="@+id/nextImageView"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="48dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/next" />
+        <ImageView
+            android:id="@+id/repeatImageView"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="64dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/repeat" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

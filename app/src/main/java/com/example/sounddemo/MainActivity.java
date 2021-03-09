@@ -10,6 +10,7 @@ import android.os.Trace;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import java.util.Timer;
@@ -17,22 +18,22 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button playButton, stopButton;
     MediaPlayer mediaPlayer;
     SeekBar volumeSeekBar, scrubSeekBar;
+    ImageView playImageView;
     AudioManager audioManager;
+    int prog;
+    boolean isPlaying = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        playButton = findViewById(R.id.PlayButton);
-        stopButton = findViewById(R.id.StopButton);
         mediaPlayer = MediaPlayer.create(this, R.raw.nunca);
         volumeSeekBar = findViewById(R.id.volumeSeekBar);
         scrubSeekBar = findViewById(R.id.scrubSeekBar);
+        playImageView = findViewById(R.id.playImageView);
 
         audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -66,43 +67,65 @@ public class MainActivity extends AppCompatActivity {
         scrubSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mediaPlayer.seekTo(progress);
+                prog = progress;
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                //mediaPlayer.pause();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //mediaPlayer.start();
+                mediaPlayer.seekTo(prog);
             }
         });
 
 
+    } //End onCreate method
 
-    }
-
-    private void startTimer(){
+    public void startTimer(){
         new Timer().scheduleAtFixedRate(new TimerTask() {
-                    @Override
-                    public void run() {
-                        scrubSeekBar.setProgress(mediaPlayer.getCurrentPosition());
-                    }
-                }, 0, 1000);
+            @Override
+            public void run() {
+                scrubSeekBar.setProgress(mediaPlayer.getCurrentPosition());
+            }
+        }, 0, 1000);
     }
-
 
 
     public void playSound(View view){
-        mediaPlayer.setLooping(true);
-        mediaPlayer.start();
-        //startTimer();
+        if (!isPlaying){
+            view.animate().rotation(180).setDuration(500);
+            play();
+        } else {
+            view.animate().rotation(0).setDuration(500);
+            pause();
+        }
     }
 
-    public void stopSound(View view){
+    public void play(){
+        playImageView.setImageResource(R.drawable.pause_blue);
+        mediaPlayer.start();
+        startTimer();
+        isPlaying = true;
+    }
+
+    public void pause(){
+        playImageView.setImageResource(R.drawable.play_blue);
         mediaPlayer.pause();
+        isPlaying = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearMediaPlayer();
+    }
+
+    private void clearMediaPlayer() {
+        mediaPlayer.stop();
+        mediaPlayer.release();
+        mediaPlayer = null;
     }
 
 }
